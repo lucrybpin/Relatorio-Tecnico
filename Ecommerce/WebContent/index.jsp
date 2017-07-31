@@ -77,79 +77,30 @@
 						<div class="row">
 						
 						<%
-						int i;
-						for(i=0; i<produtos.size(); i++) {
-							
-							//if(i%3 == 0)
-								//out.println("<div class=\"row\">");
-							
-							out.println("<div class=\"4u 12u(medium)\">");
+						for(int i=0; i<produtos.size(); i++) {
+							out.println("<div class=\"4u 12u(medium)\" style=\"height:500px\">");
 								out.println("<section class=\"box feature\">");
-									out.println("<a href=\"http://localhost:9090/Ecommerce/ver_produto.jsp?id_produto="+ produtos.get(i).getId()+"\" class=\"image featured\"><img src=\"images/"+produtos.get(i).getImagem()+".jpg\" alt=\"\" width=\"384px\" height=\"304px\"></a>");
+									if(usuario_logado == ""){
+										out.println("<a href=\"http://localhost:9090/Ecommerce/ver_produto.jsp?id_produto="+ produtos.get(i).getId()+"\" class=\"image featured\"><img src=\"images/"+produtos.get(i).getImagem()+".jpg\" alt=\"\" width=\"384px\" height=\"304px\"></a>");
+									}else {
+											
+											if((Integer)session.getAttribute("id") == 1){
+												out.println("<a href=\"http://localhost:9090/Ecommerce/editar_produto.jsp?id_produto="+ produtos.get(i).getId()+"\" class=\"image featured\"><img src=\"images/"+produtos.get(i).getImagem()+".jpg\" alt=\"\" width=\"384px\" height=\"304px\"></a>");
+											}else {
+												out.println("<a href=\"http://localhost:9090/Ecommerce/ver_produto.jsp?id_produto="+ produtos.get(i).getId()+"\" class=\"image featured\"><img src=\"images/"+produtos.get(i).getImagem()+".jpg\" alt=\"\" width=\"384px\" height=\"304px\"></a>");	
+											}
+									}
 									out.println("<div class=\"inner\">");
 										out.println("<header>");
-										
 											out.println("<h2>"+produtos.get(i).getNome()+"</h2>");
 											out.println("<p style=\"float: right;\">R$ "+ produtos.get(i).getPreco() +"</p>");
-									
 										out.println("</header>");
 									out.println("</div>");
 								out.println("</section>");
 							out.println("</div>");
-							
-							//if(i%3 == 0)
-								//out.println("<div>");
-							
 						}
 						%>
-						
-							<div class="4u 12u(medium)">
-
-								<!-- Box -->
-									<section class="box feature">
-										
-										<a href="http://localhost:9090/Ecommerce/ver_produto.jsp?id_produto=<%out.println(produtos.get(0).getId());%>" class="image featured"><img src="images/<%out.println(produtos.get(0).getImagem());%>.jpg" alt="" width="384px" height="304px" /></a>
-										<div class="inner">
-											<header>
-												<h2><%out.println(produtos.get(0).getNome());%></h2>
-												<p style="float: right;">R$ <%out.println(produtos.get(0).getPreco());%></p>
-											</header>
-										</div>
-									</section>
-
-							</div>
-							<div class="4u 12u(medium)">
-
-								<!-- Box -->
-									<section class="box feature">
-										<a href="#" class="image featured"><img src="images/<%out.println(produtos.get(1).getImagem());%>.jpg" alt="" width="384px" height="304px" /></a>
-										<div class="inner">
-											<header>
-												<h2><%out.println(produtos.get(1).getNome());%></h2>
-												<p style="float: right;"><%out.println(produtos.get(1).getPreco());%></p>
-											</header>
-										</div>
-									</section>
-
-							</div>
-							<div class="4u 12u(medium)">
-
-								<!-- Box -->
-									<section class="box feature">
-										<a href="#" class="image featured"><img src="images/<%out.println(produtos.get(2).getImagem());%>.jpg" alt="" width="384px" height="304px" /></a>
-										<div class="inner">
-											<header>
-												<h2><%out.println(produtos.get(2).getNome());%></h2>
-												<p style="float: right;"><%out.println(produtos.get(2).getPreco());%></p>
-											</header>
-										</div>
-									</section>
-
-							</div>
 						</div>
-						
-						
-						
 					</div>
 				</div>
 

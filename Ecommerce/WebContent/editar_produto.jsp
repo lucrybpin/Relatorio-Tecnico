@@ -13,7 +13,7 @@
 -->
 <html>
 	<head>
-		<title>Verti by HTML5 UP</title>
+		<title>E-Commerce</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -27,16 +27,54 @@
 	ProdutoDAO produtoDao = new ProdutoDAO(connection);
 
 	String usuario_logado = "";
-	
+			
 	int searchingId = Integer.parseInt(request.getParameter("id_produto"));  
 	Produto produto = new Produto();
 	produto.setId(searchingId);
 	produto = produtoDao.FindByID(produto);
+	System.out.println(produto.getNome());
 	
 	if(session.getAttribute("usuario") != null) {
 		System.out.println(session.getAttribute("usuario"));
 		usuario_logado = (String)session.getAttribute("usuario");
 	}
+
+	//Captura parâmetros (Para edição)
+	int id = (request.getParameter("id_produto") != null)? Integer.parseInt(request.getParameter("id_produto")) : -1;
+	String nome = request.getParameter("nome");  
+	String resumo = request.getParameter("resumo");
+	String descricao = request.getParameter("descricao");
+	String categoria = request.getParameter("categoria");
+	Float preco = (request.getParameter("preco") != null) ? Float.parseFloat(request.getParameter("preco")) : null;
+	Integer estoque = (request.getParameter("estoque") != null) ? Integer.parseInt(request.getParameter("estoque")) : null;
+	String imagem = request.getParameter("imagem");
+	String update = request.getParameter("update");
+	String delete = request.getParameter("delete");
+	
+	//Realiza cadastro
+	if (update != null && nome != null && resumo != null && descricao != null &&
+		categoria != null && preco != null && estoque != null && imagem != null) {
+		produto.setNome(nome);
+		produto.setResumo(resumo);
+		produto.setDescricao(descricao);
+		produto.setCategoria(categoria);
+		produto.setPreco(preco);
+		produto.setEstoque(estoque);
+		produto.setImagem(imagem);
+		produtoDao.Update(produto);
+		response.sendRedirect("http://localhost:9090/Ecommerce/#");
+	}
+	
+	//Deletar cadastro
+	if(delete != null && id != -1) {
+		produto.setId(id);
+		produtoDao.Delete(produto);
+		response.sendRedirect("http://localhost:9090/Ecommerce/#");
+	}
+	
+	//
+	
+	
 	%>
 		<div id="page-wrapper">
 
@@ -47,77 +85,56 @@
 						<!-- Logo -->
 							<div id="logo">
 								<h1><a href="http://localhost:9090/Ecommerce/#">eCommerce</a></h1>
-								<span><%= usuario_logado %></span>
+								<span>by HTML5 UP</span>
 							</div>
-
+							
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
-									<li><a href="http://localhost:9090/Ecommerce/#">Home</a></li>
-									<%	//Não logado
-										if(usuario_logado == "") {
-										out.println("<li><a href=\"http://localhost:9090/Ecommerce/cadastrar_usuario.jsp\">Cadastrar</a></li>");
-										out.println("<li><a href=\"http://localhost:9090/Ecommerce/acessar_usuario.jsp\">Acessar</a></li>");
-										} else {
-										out.println("<li><a href=\"http://localhost:9090/Ecommerce/action_deslogar.jsp\">Sair</a></li>");
-										}
-									%>
+									<li class="current"><a href="http://localhost:9090/Ecommerce/#">Home</a></li>
 								</ul>
 							</nav>
+
 					</header>
 				</div>
 
 			<!-- Features -->
-				<div id="features-wrapper">
-					<div class="container">
-						<div class="row">
+			<form action="http://localhost:9090/Ecommerce/editar_produto.jsp" method="get">
+				<div class="row">
+					<div class="12u">
+						<div id="copyright">
+							<ul class="menu">
+								<li>ID</li><li><input readonly="readonly" type="text" name="id_produto" value="<%out.println(produto.getId());%>" size="45"></input></li>
+							</ul>
+							<ul class="menu">
+								<li>Nome</li><li><input type="text" name="nome" value="<%out.println(produto.getNome());%>" size="45"></input></li>
+							</ul>
+							<ul class="menu">
+								<li>Resumo</li><li><textarea name="resumo" rows="3" cols="100"><%out.println(produto.getResumo());%></textarea></li>
+							</ul>
+							<ul class="menu">
+								<li>Descricao</li><li><textarea name="descricao" rows="6" cols="100"><%out.println(produto.getDescricao());%></textarea></li>
+							</ul>
+							<ul class="menu">
+								<li>Categoria</li><li><input type="text" name="categoria" value="<%out.println(produto.getCategoria());%>"></input></li>
+							</ul>
+							<ul class="menu">
+								<li>Preço</li><li><input type="text" name="preco" value="<%out.println(produto.getPreco());%>"></input></li>
+							</ul>
+							<ul class="menu">
+								<li>Estoque</li><li><input type="text" name="estoque" value="<%out.println(produto.getEstoque());%>"></input></li>
+							</ul>
+							<ul class="menu">
+								<li>Imagem</li><li><input type="text" name="imagem" value="<%out.println(produto.getImagem());%>"></input></li>
+							</ul>
+							<ul class="menu">
+								<li><input type="submit" name="delete" value="Remover"></input></li>
+								<li><input type="submit" name="update" value="Atualizar"></input></li>
+							</ul>
 						</div>
 					</div>
 				</div>
-
-			<!-- Main -->
-				<div id="main-wrapper">
-					<div class="container">
-						<div class="row 200%">
-							<div class="4u 12u(medium)">
-
-								<!-- Sidebar -->
-									<div id="sidebar">
-										<section class="widget thumbnails">
-											<div class="grid">
-												<div class="row 50%">
-													<div class="12u"><a href="#" class="image fit"><img src="images/<%out.println(produto.getImagem());%>.jpg" alt="" /></a></div>
-												</div>
-												<div class="row 50%">
-													<div class="6u"><p>Estoque</p></div>
-													<div class="6u"><% out.println(produto.getEstoque()); %></div>
-												</div>
-											</div>
-										</section>
-									</div>
-
-							</div>
-							<div class="8u 12u(medium) important(medium)">
-
-								<!-- Content -->
-									<div id="content">
-										<section class="last">
-											<h2><% out.println(produto.getNome()); %></h2>
-											<h3>[ <% out.println(produto.getCategoria()); %> ] </h3>
-											<p><%  out.println(produto.getDescricao()); %></p>
-											<a href="
-												<% if(usuario_logado == "")
-													out.println("http://localhost:9090/Ecommerce/acessar_usuario.jsp");
-												else 
-													out.println("http://localhost:9090/Ecommerce/action_comprar_produto.jsp?id_produto="+produto.getId());
-											%>" class="button icon fa-arrow-circle-right" style="float: right;">R$<% out.println(produto.getPreco()); %></a>
-										</section>
-									</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
+			</form>
 
 			<!-- Footer -->
 				<div id="footer-wrapper">
@@ -198,17 +215,15 @@
 						</div>
 					</footer>
 				</div>
+
 			</div>
-
 		<!-- Scripts -->
-
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
 	
 	</body>
 	
