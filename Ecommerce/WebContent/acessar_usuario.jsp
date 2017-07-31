@@ -63,23 +63,6 @@
 							<nav id="nav">
 								<ul>
 									<li><a href="http://localhost:9090/Ecommerce/#">Home</a></li>
-									<li>
-										<a href="#">Dropdown</a>
-										<ul>
-											<li><a href="#">Lorem ipsum dolor</a></li>
-											<li><a href="#">Magna phasellus</a></li>
-											<li>
-												<a href="#">Phasellus consequat</a>
-												<ul>
-													<li><a href="#">Lorem ipsum dolor</a></li>
-													<li><a href="#">Phasellus consequat</a></li>
-													<li><a href="#">Magna phasellus</a></li>
-													<li><a href="#">Etiam dolore nisl</a></li>
-												</ul>
-											</li>
-											<li><a href="#">Veroeros feugiat</a></li>
-										</ul>
-									</li>
 									<li ><a href="http://localhost:9090/Ecommerce/cadastrar_usuario.jsp">Cadastrar</a></li>
 									<li class="current"><a href="http://localhost:9090/Ecommerce/acessar_usuario.jsp">Acessar</a></li>
 								</ul>

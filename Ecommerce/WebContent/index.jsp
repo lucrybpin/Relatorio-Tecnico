@@ -75,6 +75,34 @@
 				<div id="features-wrapper">
 					<div class="container">
 						<div class="row">
+						
+						<%
+						int i;
+						for(i=0; i<produtos.size(); i++) {
+							
+							//if(i%3 == 0)
+								//out.println("<div class=\"row\">");
+							
+							out.println("<div class=\"4u 12u(medium)\">");
+								out.println("<section class=\"box feature\">");
+									out.println("<a href=\"http://localhost:9090/Ecommerce/ver_produto.jsp?id_produto="+ produtos.get(i).getId()+"\" class=\"image featured\"><img src=\"images/"+produtos.get(i).getImagem()+".jpg\" alt=\"\" width=\"384px\" height=\"304px\"></a>");
+									out.println("<div class=\"inner\">");
+										out.println("<header>");
+										
+											out.println("<h2>"+produtos.get(i).getNome()+"</h2>");
+											out.println("<p style=\"float: right;\">R$ "+ produtos.get(i).getPreco() +"</p>");
+									
+										out.println("</header>");
+									out.println("</div>");
+								out.println("</section>");
+							out.println("</div>");
+							
+							//if(i%3 == 0)
+								//out.println("<div>");
+							
+						}
+						%>
+						
 							<div class="4u 12u(medium)">
 
 								<!-- Box -->
@@ -119,6 +147,9 @@
 
 							</div>
 						</div>
+						
+						
+						
 					</div>
 				</div>
 
